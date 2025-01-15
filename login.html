@@ -1,0 +1,229 @@
+<html><head><base href="https://example.com">
+  <title>用户登录</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f4f4f4; 
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+    }
+    .login-container {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      max-width: 95%;
+      width: 400px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+    .form-input {
+      transition: all 0.3s ease;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+    .form-input:focus {
+      border-color: #6366f1; 
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+      background: white;
+      transform: scale(1.02);
+      outline: none;
+    }
+    .form-input:focus + .input-label {
+      color: #6366f1;
+      transform: translateY(-25px) scale(0.8);
+    }
+    .input-wrapper {
+      position: relative;
+    }
+    .input-label {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      color: #6a6a6a;
+      transform-origin: left top;
+    }
+    .form-input:not(:placeholder-shown) + .input-label,
+    .form-input:focus + .input-label {
+      color: #6366f1;
+      transform: translateY(-25px) scale(0.8);
+    }
+    .submit-btn {
+      border-radius: 16px;
+      transition: all 0.4s ease;
+      transform: scale(1);
+    }
+    .submit-btn:hover {
+      transform: scale(1.05);
+      background-color: #4f46e5; 
+    }
+    @media (max-width: 640px) {
+      .login-container {
+        width: 90%;
+        margin: 1rem;
+      }
+    }
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* 新的记住我复选框样式 */
+    .remember-checkbox {
+      display: none;
+    }
+    .remember-label {
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.3s ease;
+    }
+    .remember-label::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      border-radius: 6px;
+      border: 2px solid #6366f1;
+      transition: all 0.3s ease;
+    }
+    .remember-checkbox:checked + .remember-label::before {
+      background-color: #6366f1;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10' viewBox='0 0 12 10' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='1 5.5 4 8.5 11 1.5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      border-color: #6366f1;
+    }
+    .remember-label:hover::before {
+      transform: scale(1.1);
+      box-shadow: 0 0 8px rgba(99, 102, 241, 0.3);
+    }
+
+    /* 新的注册链接样式 */
+    .register-link {
+      position: relative;
+      color: #6366f1;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    .register-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: #6366f1;
+      transition: width 0.3s ease;
+    }
+    .register-link:hover {
+      transform: translateY(-2px);
+      color: #4f46e5;
+    }
+    .register-link:hover::after {
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
+  <div class="login-container bg-white bg-opacity-20 animate-float">
+    <h2 class="text-center text-2xl font-bold mb-6 text-gray-800">用户登录</h2>
+    
+    <form id="loginForm" class="space-y-4">
+      <div class="input-wrapper">
+        <input 
+          type="text" 
+          id="username" 
+          name="username" 
+          required 
+          placeholder=" "
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-xl form-input"
+        >
+        <label for="username" class="input-label">用户名</label>
+      </div>
+      
+      <div class="input-wrapper">
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          required 
+          placeholder=" "
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-xl form-input"
+        >
+        <label for="password" class="input-label">密码</label>
+      </div>
+      
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <input 
+            id="remember" 
+            type="checkbox" 
+            class="remember-checkbox"
+          >
+          <label for="remember" class="remember-label text-sm text-gray-900">
+            记住我
+          </label>
+        </div>
+        
+        <div>
+          <a href="https://example.com/forget-password" class="text-sm text-indigo-600 hover:text-indigo-500">
+            忘记密码?
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <button 
+          type="submit" 
+          class="submit-btn w-full flex justify-center py-2 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          登录
+        </button>
+      </div>
+    </form>
+    
+    <div class="mt-6 text-center">
+      <p class="text-sm text-gray-600">
+        还没有账号? 
+        <a href="https://example.com/register" class="register-link">
+          立即注册
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const rememberMe = document.getElementById('remember').checked;
+
+      // 模拟登录逻辑
+      if (username && password) {
+        // 在实际应用中，这里应该是一个 AJAX 请求
+        alert('登录成功！\n用户名：' + username + '\n记住我：' + (rememberMe ? '是' : '否'));
+      } else {
+        alert('请输入用户名和密码');
+      }
+    });
+  </script>
+</body>
+</html>
